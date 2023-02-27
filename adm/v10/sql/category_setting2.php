@@ -3,7 +3,7 @@ include_once('./_head.sub.php');
 $xls = G5_USER_ADMIN_SQL_PATH.'/xls/bom_product_exlabel.xlsx';
 ?>
 <div>
-    <a id="btn_start" href="<?=G5_USER_ADMIN_SQL_URL?>/category_setting.php?start=1">시작</a>
+    <a id="btn_start" href="<?=G5_USER_ADMIN_SQL_URL?>/category_setting2.php?start=1">시작</a>
 </div>
 <?php
 $demo = 6;  // 데모모드 = 1
@@ -215,6 +215,49 @@ if($start){
 	// print_r2($modBom);
 	// print_r2($addBom);
 	// exit;
+	/*
+	Array
+	(
+		[HR] => Array
+			(
+				[sort] => 1
+				[bct_id] => 10
+				[subs] => Array
+					(
+						[H/REST] => Array
+							(
+								[sort] => 1
+								[bct_id] => 1010
+								[subs] => Array
+									(
+										[다크브라운] => Array
+											(
+												[sort] => 1
+												[bct_id] => 101010
+												[subs] => Array
+													(
+														[고정_FRT] => Array
+															(
+																[sort] => 1
+																[bct_id] => 10101010
+	*/
+	//print_r2($modBom | $addBom);
+	/*
+	Array
+	(
+		[0] => Array
+			(
+				[bct_id] => 10101010
+				[bom_part_no] => 88700-4F160RES
+				[bom_name] => 다크브라운_고정_FRT
+				[bom_ex_label] => 
+				[bom_sort] => 0
+			)
+	*/
+	//exit;
+
+
+
 
 	//BOM데이터 수정
 	if(@sizeof($modBom)){
@@ -257,10 +300,11 @@ if($start){
 		sql_query($sql_ins,1);
 	}
 	}
-    echo "완료!";
+	echo "완료!";
 }
 else{
-	echo '[시작]버튼을 눌러야 실행됩니다.';
+	echo "[시작]버튼을 눌러야 실행됩니다.";
 }
+
 include_once('./_tail.sub.php');
 ?>
