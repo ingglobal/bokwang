@@ -114,45 +114,45 @@ else if(is_array($getData[0]['list'])) {
         $sum1 = sql_fetch($sql,1); // 일 평균 데이터값 추출 
 
         // 있으면 업데이트, 없으면 생성
-        $sql_sum = "   SELECT dta_idx FROM {$g5['data_measure_sum_table']} 
-                        WHERE {$sum_common}
-                            AND dta_date = '".$arr['dta_date1']."'
-        ";
-        //echo $sql_sum.'<br>';
-		$sum = sql_fetch($sql_sum,1);
-		// 정보 업데이트
-		if($sum['dta_idx']) {
-            $sql = "UPDATE {$g5['data_measure_sum_table']} SET
-                        dta_avg = '".$sum1['dta_avg']."'
-                        , dta_sum = '".$sum1['dta_sum']."'
-                        , dta_max = '".$sum1['dta_max']."'
-                        , dta_min = '".$sum1['dta_min']."'
-                    WHERE {$sum_common}
-                        AND dta_date = '".$arr['dta_date1']."'
-            ";
-            // sql_query(" INSERT INTO {$g5['meta_table']} SET mta_value = 'up: ".addslashes($sql)."' ");
-            $result = sql_query($sql);
-        }
-        else {
-            $sql = " INSERT INTO {$g5['data_measure_sum_table']} SET
-                        com_idx = '".$arr['com_idx']."'
-                        , imp_idx = '".$arr['imp_idx']."'
-                        , mms_idx = '".$arr['mms_idx']."'
-                        , mmg_idx = '".$g5['mms'][$arr['mms_idx']]['mmg_idx']."'
-                        , dta_shf_no = '".$arr['dta_shf_no']."'
-                        , dta_mmi_no = '".$arr['dta_mmi_no']."'
-                        , dta_group = '".$arr['dta_group']."'
-                        , dta_type = '".$arr['dta_type']."'
-                        , dta_no = '".$arr['dta_no']."'
-                        , dta_date = '".$arr['dta_date1']."'
-                        , dta_avg = '".$sum1['dta_avg']."'
-                        , dta_sum = '".$sum1['dta_sum']."'
-                        , dta_max = '".$sum1['dta_max']."'
-                        , dta_min = '".$sum1['dta_min']."'
-            ";
-            // sql_query(" INSERT INTO {$g5['meta_table']} SET mta_value = 'in: ".addslashes($sql)."' ");
-            $result = sql_query($sql);
-        }
+        // $sql_sum = "   SELECT dta_idx FROM {$g5['data_measure_sum_table']} 
+        //                 WHERE {$sum_common}
+        //                     AND dta_date = '".$arr['dta_date1']."'
+        // ";
+        // //echo $sql_sum.'<br>';
+		// $sum = sql_fetch($sql_sum,1);
+		// // 정보 업데이트
+		// if($sum['dta_idx']) {
+        //     $sql = "UPDATE {$g5['data_measure_sum_table']} SET
+        //                 dta_avg = '".$sum1['dta_avg']."'
+        //                 , dta_sum = '".$sum1['dta_sum']."'
+        //                 , dta_max = '".$sum1['dta_max']."'
+        //                 , dta_min = '".$sum1['dta_min']."'
+        //             WHERE {$sum_common}
+        //                 AND dta_date = '".$arr['dta_date1']."'
+        //     ";
+        //     // sql_query(" INSERT INTO {$g5['meta_table']} SET mta_value = 'up: ".addslashes($sql)."' ");
+        //     $result = sql_query($sql);
+        // }
+        // else {
+        //     $sql = " INSERT INTO {$g5['data_measure_sum_table']} SET
+        //                 com_idx = '".$arr['com_idx']."'
+        //                 , imp_idx = '".$arr['imp_idx']."'
+        //                 , mms_idx = '".$arr['mms_idx']."'
+        //                 , mmg_idx = '".$g5['mms'][$arr['mms_idx']]['mmg_idx']."'
+        //                 , dta_shf_no = '".$arr['dta_shf_no']."'
+        //                 , dta_mmi_no = '".$arr['dta_mmi_no']."'
+        //                 , dta_group = '".$arr['dta_group']."'
+        //                 , dta_type = '".$arr['dta_type']."'
+        //                 , dta_no = '".$arr['dta_no']."'
+        //                 , dta_date = '".$arr['dta_date1']."'
+        //                 , dta_avg = '".$sum1['dta_avg']."'
+        //                 , dta_sum = '".$sum1['dta_sum']."'
+        //                 , dta_max = '".$sum1['dta_max']."'
+        //                 , dta_min = '".$sum1['dta_min']."'
+        //     ";
+        //     // sql_query(" INSERT INTO {$g5['meta_table']} SET mta_value = 'in: ".addslashes($sql)."' ");
+        //     $result = sql_query($sql);
+        // }
     
     }
 	

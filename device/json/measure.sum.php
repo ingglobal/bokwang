@@ -26,7 +26,8 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
 	exit(0);
 }
 
-if(!$_REQUEST['token']){
+exit;
+if(true){ //(!$_REQUEST['token']){
 //	$list = array('');
 }
 else if($_REQUEST['mms_idx']){
