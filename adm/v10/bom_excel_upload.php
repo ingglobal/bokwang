@@ -137,42 +137,37 @@ function func_delete_bom_item($arr) {
 }
 }
 
+echo 'slfss'; exit;
+require_once G5_LIB_PATH.'/PhpSpreadsheet19/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Spreadsheet; 
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
-// ref: https://github.com/PHPOffice/PHPExcel
-require_once G5_LIB_PATH."/PHPExcel-1.8/Classes/PHPExcel.php"; // PHPExcel.php을 불러옴.
-$objPHPExcel = new PHPExcel();
-require_once G5_LIB_PATH."/PHPExcel-1.8/Classes/PHPExcel/IOFactory.php"; // IOFactory.php을 불러옴.
+$file_name = $_FILES['file_excel']['name'];
 $filename = $_FILES['file_excel']['tmp_name'];
-PHPExcel_Settings::setZipClass(PHPExcel_Settings::PCLZIP);
-
-// 파일의 저장형식이 utf-8일 경우 한글파일 이름은 깨지므로 euc-kr로 변환해준다.
-$filename = iconv("UTF-8", "EUC-KR", $filename);
-try {
-    // 업로드한 PHP 파일을 읽어온다.
-	$objPHPExcel = PHPExcel_IOFactory::load($filename);
-	$sheetsCount = $objPHPExcel -> getSheetCount();
-    
-	// 시트Sheet별로 읽기
-    $allData = array();
-	for($i = 0; $i < $sheetsCount; $i++) {
-
-          $objPHPExcel -> setActiveSheetIndex($i);
-          $sheet = $objPHPExcel -> getActiveSheet();
-          $highestRow = $sheet -> getHighestRow();          // 마지막 행
-          $highestColumn = $sheet -> getHighestColumn();    // 마지막 컬럼
-          // 한줄씩 읽기
-          for($row = 1; $row <= $highestRow; $row++) {
-            // $rowData가 한줄의 데이터를 셀별로 배열처리 된다.
-            $rowData = $sheet -> rangeToArray("A" . $row . ":" . $highestColumn . $row, NULL, TRUE, FALSE);
-            // $rowData에 들어가는 값은 계속 초기화 되기때문에 값을 담을 새로운 배열을 선안하고 담는다.
-            $allData[$i][$row] = $rowData[0];
-          }
-	}
-} catch(exception $e) {
-	echo $e;
+$file_type = pathinfo($file_name, PATHINFO_EXTENSION);
+if ($file_type =='xls') {
+	$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();	
 }
-// print_r2($allData);
-// exit;
+elseif ($file_type =='xlsx') {
+	$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+}
+else {
+	echo '처리할 수 있는 엑셀 파일이 아닙니다';
+	exit;
+}
+
+$spreadsheet = $reader->load($filename);	
+$sheetCount = $spreadsheet->getSheetCount();
+for ($i = 0; $i < $sheetCount; $i++) {
+    $sheet = $spreadsheet->getSheet($i);
+    $sheetData = $sheet->toArray(null, true, true, true);
+    // echo $i.' ------------- <br>';
+    // print_r2($sheetData);
+    $allData[$i] = $sheetData;
+}
+
+print_r2($allData);
+exit;
 
 
 
