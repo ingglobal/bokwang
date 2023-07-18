@@ -79,7 +79,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 <select name="sfl" id="sfl">
     <option value="bct_name"<?php echo get_selected($sfl, "bct_name", true); ?>>항목명</option>
     <option value="bct_id"<?php echo get_selected($sfl, "bct_id", true); ?>>분류코드</option>
-    <option value="bct_mb_id"<?php echo get_selected($sfl, "bct_mb_id", true); ?>>회원아이디</option>
+    <!-- <option value="bct_mb_id"<?php echo get_selected($sfl, "bct_mb_id", true); ?>>회원아이디</option> -->
 </select>
 
 <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
