@@ -112,6 +112,19 @@ for($i=1;$i<=6;$i++){
     //print_r2($_FILES['cat_f'.$i]);
     upload_multi_file($_FILES['cat_f'.$i],'bom_category',$bct_id,'file'.$i);
 }
+
+// bct_no번호 재지정
+$c_sql = " UPDATE {$g5['bom_category_table']} AS t1
+            JOIN (
+                SELECT bct_id, 
+                        ROW_NUMBER() OVER (ORDER BY bct_id ASC) AS row_num
+                FROM {$g5['bom_category_table']}
+            ) AS t2
+            ON t1.bct_id = t2.bct_id
+            SET t1.bct_no = t2.row_num;
+";
+sql_query($c_sql, 1);
+
 //exit;
 if ($w == "" || $w == "u")
 {

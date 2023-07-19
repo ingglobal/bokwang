@@ -47,7 +47,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 if (!$sst)
 {
-    $sst  = "bct_no";
+    $sst  = "bct_id";
     $sod = "asc";
 }
 $sql_order = "order by $sst $sod";
@@ -100,12 +100,10 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
-        <!-- <th scope="col"><?php //echo subject_sort_link("bct_id"); ?>분류코드</a></th> -->
-        <th scope="col">분류코드</th>
-        <!-- <th scope="col" id="sct_cate"><?php //echo subject_sort_link("bct_name"); ?>항목명</a></th> -->
-        <th scope="col" id="sct_cate">항목명</th>
+        <th scope="col"><?php echo subject_sort_link("bct_id"); ?>분류코드</a></th>
+        <th scope="col" id="sct_cate"><?php echo subject_sort_link("bct_name"); ?>항목명</a></th>
         <th scope="col" id="sct_amount">제품수</th>
-        <th scope="col" id="sct_imgcol">고유번호</th>
+        <th scope="col" id="sct_imgcol">정렬순서</th>
         <th scope="col">관리</th>
     </tr>
     </thead>
@@ -152,8 +150,8 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         <td headers="sct_cate" class="sct_name<?php echo $level; ?>"><?php echo $s_level; ?> <input type="text" name="bct_name[<?php echo $i; ?>]" value="<?php echo get_text($row['bct_name']); ?>" id="bct_name_<?php echo $i; ?>" required class="tbl_input full_input required"></td>
         <td headers="sct_amount" class="td_amount"><a href="./bom_list.php?sca=<?php echo $row['bct_id']; ?>"><?php echo $row1['cnt']; ?></a></td>
         <td headers="sct_imgw">
-            <label for="bct_out_width<?php echo $i; ?>" class="sound_only">고유번호</label>
-            <?=$row['bct_no']?>
+            <label for="bct_out_width<?php echo $i; ?>" class="sound_only">정렬번호</label>
+            <input type="text" name="bct_order[<?php echo $i; ?>]" value="<?php echo get_text($row['bct_order']); ?>" id="bct_out_width<?php echo $i; ?>" required class="required tbl_input" size="3" > <span class="sound_only">픽셀</span>
         </td>
         <td class="td_mng">
             <?php echo $s_add; ?>

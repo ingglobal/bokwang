@@ -13,41 +13,33 @@ $demo = 0;  // 데모모드 = 1
 // exit;
 
 /*
-$kv = array(
-    'B' => '카테고리#1'
-    ,'C' => '카테고리#2'
-    ,'D' => '카테고리#3'
-    ,'E' => '카테고리#4'
-    ,'F' => '외부바코드정보'
-    ,'G' => 'P/NO'
-    ,'H' => 'P/NAME'
-    ,'I' => '매출단가'
-    ,'J' => '재료비'
-    ,'K' => '부 가'
-    ,'L' => '비 율'
-    ,'M' => '업 체'
-    ,'N' => 'P/NO'
-    ,'O' => 'P/NAME'
-    ,'P' => '단 가'
-    ,'Q' => 'Usage'
+$kv_arr = array(
+    'B' => '차종'
+    ,'C' => 'P/NO'
+    ,'D' => 'P/NAME'
+    ,'E' => '매출단가'
+    ,'F' => '재료비'
+    ,'G' => '부 가'
+    ,'H' => '비 율'
+    ,'I' => '업 체'
+    ,'J' => 'P/NO'
+    ,'K' => 'P/NAME'
+    ,'L' => '단 가'
+    ,'M' => 'Usage'
 );
-$vk = array(
-    '카테고리#1' => 'B'
-    '카테고리#2' => 'C'
-    '카테고리#3' => 'D'
-    '카테고리#4' => 'E'
-    '외부바코드정보' => 'F'
-    ,'P/NO' => 'G'
-    ,'P/NAME' => 'H'
-    ,'매출단가' => 'I'
-    ,'재료비' => 'J'
-    ,'부 가' => 'K'
-    ,'비 율' => 'L'
-    ,'업 체' => 'M'
-    ,'P/NO' => 'N'
-    ,'P/NAME' => 'O'
-    ,'단 가' => 'P'
-    ,'Usage' => 'Q'
+$vk_arr = array(
+    '차종' => 'B'
+    ,'P/NO' => 'C'
+    ,'P/NAME' => 'D'
+    ,'매출단가' => 'E'
+    ,'재료비' => 'F'
+    ,'부 가' => 'G'
+    ,'비 율' => 'H'
+    ,'업 체' => 'I'
+    ,'P/NO' => 'J'
+    ,'P/NAME' => 'K'
+    ,'단 가' => 'L'
+    ,'Usage' => 'M'
 );
 */
 
@@ -84,8 +76,8 @@ for ($i = 0; $i < $sheetCount; $i++) {
     // print_r2($sheetData);
     $allData[$i] = $sheetData;
 }
-// print_r2(sizeof($allData));
 // print_r2($allData[0]);
+// print_r2(sizeof($allData));
 // exit;
 
 $g5['title'] = '엑셀 업로드';
@@ -111,7 +103,7 @@ $maxscreen = 50; // 몇건씩 화면에 보여줄건지?
 
 flush();
 ob_flush();
-//preg_replace('/[^a-zA-Z0-9가-힣\-\_\/]/','',$tstr);
+
 
 $i = 0;
 for($i=0;$i<=sizeof($allData[0]);$i++) {
@@ -124,52 +116,35 @@ for($i=0;$i<=sizeof($allData[0]);$i++) {
     //해당 라인만 추출
     // echo 'ok<br>';
     if(!preg_match("/[가-힝]/",$allData[0][$i]['B'])
-            && ( preg_match("/[-a-zA-Z]/",$allData[0][$i]['G']) 
-                || preg_match("/[-a-zA-Z]/",$allData[0][$i]['N']) ) ) {
+            && ( preg_match("/[-a-zA-Z]/",$allData[0][$i]['C']) 
+                || preg_match("/[-a-zA-Z]/",$allData[0][$i]['J']) ) ) {
         // 한줄에 두개 상품이 있는 경우가 있으므로 제품을 배열로 분리
         // 쟈재인 경우 (자재는 항상 존재하므로 배열 0번에 배치시킴)
         // echo 'in<br>';
-        if($allData[0][$i]['M']) {
+        if($allData[0][$i]['I']) {
             // echo 'i<br>';
-            $arr[$i][0]['com_name'] = trim($allData[0][$i]['M']);
-            $arr[$i][0]['bom_part_no'] = trim($allData[0][$i]['N']);
-            $arr[$i][0]['bom_part_no_parent'] = trim($allData[0][$i]['G']);
-            $arr[$i][0]['bom_name'] = trim($allData[0][$i]['O']);
-            $arr[$i][0]['bom_price'] = trim($allData[0][$i]['P']);
-            $arr[$i][0]['bit_count'] = trim($allData[0][$i]['Q']);
+            $arr[$i][0]['com_name'] = trim($allData[0][$i]['I']);
+            $arr[$i][0]['bom_part_no'] = trim($allData[0][$i]['J']);
+            $arr[$i][0]['bom_part_no_parent'] = trim($allData[0][$i]['C']);
+            $arr[$i][0]['bom_name'] = trim($allData[0][$i]['K']);
+            $arr[$i][0]['bom_price'] = trim($allData[0][$i]['L']);
+            $arr[$i][0]['bit_count'] = trim($allData[0][$i]['M']);
             $arr[$i][0]['bom_type'] = 'material';
         }
         //완제품인 경우, 배열1번
         if($allData[0][$i]['C']) {
-            $arr[$i][1]['bct_id'] = '';
-            $arr[$i][1]['cat1'] = preg_replace('/[^a-zA-Z0-9가-힣\-\_\/]/','',trim($allData[0][$i]['B']));
-            $c1 = sql_fetch(" SELECT bct_id FROM {$g5['bom_category_table']} WHERE bct_name = '{$arr[$i][1]['cat1']}' AND bct_id REGEXP '^.{2}$' LIMIT 1 ");
-            $arr[$i][1]['bct_id'] = ($c1['bct_id']) ? $c1['bct_id'] : '';
-
-            $arr[$i][1]['cat2'] = preg_replace('/[^a-zA-Z0-9가-힣\-\_\/]/','',trim($allData[0][$i]['C']));
-            $c2 = sql_fetch(" SELECT bct_id FROM {$g5['bom_category_table']} WHERE bct_name = '{$arr[$i][1]['cat2']}' AND bct_id REGEXP '^.{4}$' AND bct_id LIKE '{$c1['bct_id']}%' LIMIT 1 ");
-            $arr[$i][1]['bct_id'] = ($c2['bct_id']) ? $c2['bct_id'] : $c1['bct_id'];
-
-            $arr[$i][1]['cat3'] = preg_replace('/[^a-zA-Z0-9가-힣\-\_\/]/','',trim($allData[0][$i]['D']));
-            $c3 = sql_fetch(" SELECT bct_id FROM {$g5['bom_category_table']} WHERE bct_name = '{$arr[$i][1]['cat3']}' AND bct_id REGEXP '^.{6}$' AND bct_id LIKE '{$c2['bct_id']}%' LIMIT 1 ");
-            $arr[$i][1]['bct_id'] = ($c3['bct_id']) ? $c3['bct_id'] : $c2['bct_id'];
-
-            $arr[$i][1]['cat4'] = preg_replace('/[^a-zA-Z0-9가-힣\-\_\/]/','',trim($allData[0][$i]['E']));
-            $c4 = sql_fetch(" SELECT bct_id FROM {$g5['bom_category_table']} WHERE bct_name = '{$arr[$i][1]['cat4']}' AND bct_id REGEXP '^.{8}$' AND bct_id LIKE '{$c3['bct_id']}%' LIMIT 1 ");
-            $arr[$i][1]['bct_id'] = ($c4['bct_id']) ? $c4['bct_id'] : $c3['bct_id'];
-
-            $arr[$i][1]['bom_ex_label'] = trim($allData[0][$i]['F']);
-            $arr[$i][1]['bom_part_no'] = trim($allData[0][$i]['G']);
-            $arr[$i][1]['bom_part_no_parent'] = trim($allData[0][$i]['G']);
-            $arr[$i][1]['bom_name'] = trim($allData[0][$i]['H']);
-            $arr[$i][1]['bom_price'] = trim($allData[0][$i]['I']);
+            $arr[$i][1]['cartype'] = trim($allData[0][$i]['B']);
+            $arr[$i][1]['bom_part_no'] = trim($allData[0][$i]['C']);
+            $arr[$i][1]['bom_part_no_parent'] = trim($allData[0][$i]['C']);
+            $arr[$i][1]['bom_name'] = trim($allData[0][$i]['D']);
+            $arr[$i][1]['bom_price'] = trim($allData[0][$i]['E']);
             $arr[$i][1]['bom_type'] = 'product';
         }
     }
     else
         continue;
     // print_r2($arr[$i]);
-    // continue;
+
     // 완제품 있으면 먼저 생성 (부모 코드가 있어야 함)
     if(is_array($arr[$i][1])) {
         // 엑셀 삭제 처리
@@ -262,7 +237,6 @@ for($i=0;$i<=sizeof($allData[0]);$i++) {
     if ($i % $maxscreen == 0)
         echo "<script> document.all.cont.innerHTML = ''; </script>\n";
 }
-// exit;
 // 엑셀 삭제 처리, for문 전체 돌고 나서 마지막 처리
 // print_r2($bom_childs[$bom_par]);
 $ar['bom_idx'] = $bom_par;

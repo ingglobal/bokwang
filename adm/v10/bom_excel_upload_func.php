@@ -45,6 +45,8 @@ function func_update_bom($arr) {
     //bct_id = '".$arr['bct_id']."',
     $sql_common = " com_idx = '".$_SESSION['ss_com_idx']."',
                     com_idx_provider = '".$com['com_idx_provider']."',
+                    bct_id = '".$arr['bct_id']."',
+                    bom_ex_label = '".$arr['bom_ex_label']."',
                     bom_name = '".addslashes($arr['bom_name'])."',
                     bom_type = '".$arr['bom_type']."',
                     bom_price = '".$arr['bom_price']."',
