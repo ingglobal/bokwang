@@ -1,11 +1,13 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-if(!function_exists('excel_time_convert')){
-function excel_time_convert($time) {  //45563 날짜값을 날짜포맷변경
-    $t = ( $time - 25568 ) * 86400-60*60*9;  // 25569 : -1 daty 
-    $t = round($t*10)/10;
-    $t = date('Y-m-d',$t);
-    return $t;
+if(!function_exists('no_cnt_row')){
+function no_cnt_row($arr) {  //13일치 값이 한 개도 없으면 건너띄어야 하므로
+    $no_cnt = true;
+    foreach($arr as $k => $v){
+        if($v != '' && $v != 0 && $v != 0 && preg_match('/[0-9]/',$v)) $no_cnt = false;
+    }
+
+    return $no_cnt;
 }
 }

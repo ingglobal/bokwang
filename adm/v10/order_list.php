@@ -391,7 +391,6 @@ $('.date_blank').on('click',function(e){
         <tr>
             <td style="line-height:130%;padding:10px 0;">
                 <ol class="md_ol">
-                    <li>엑셀은 97-2003통합문서만 등록가능합니다. (*.xls파일로 저장)</li>
                     <li>엑셀은 하단에 탭으로 여러개 있으면 등록 안 됩니다. (한개의 독립 문서이어야 합니다.)</li>
                     <li style="color:orange;">대량데이터처리이므로 시간이 걸리는 작업입니다. 실행 되는동안 절대 창을 닫거나 다른 버튼을 클릭하지 마세요. 저장되는 데이터에 문제가 발생할 수 있습니다.</li>
                 </ol>

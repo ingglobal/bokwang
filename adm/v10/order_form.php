@@ -13,6 +13,21 @@ if ($w == '') {
     
 }
 else if ($w == 'u') {
+    // $ri_sql = " SELECT SUM(ori_price) AS total_price
+    //             FROM {$g5['order_item_table']}
+    //                 WHERE ori_status NOT IN ('delete', 'del', 'trash') 
+    //                     AND ord_idx = '{$ord_idx}'
+    
+    // ";
+    // $ori_res = sql_fetch($ri_sql);
+    
+    // $rd_sql = " UPDATE {$g5['order_table']} 
+    //                 SET ord_price = '{$ori_res['total_price']}'
+    //             WHERE ord_idx = '{$ord_idx}'
+    // ";
+    // sql_query($rd_sql,1);
+
+
     $sql = " SELECT * FROM {$g5['order_table']} WHERE ord_idx = '{$ord_idx}' ";
     $ord = sql_fetch($sql);
     $csql = sql_fetch(" SELECT com_name FROM {$g5['company_table']} WHERE com_idx = '{$ord['com_idx_customer']}' ");
