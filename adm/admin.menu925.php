@@ -6,7 +6,7 @@ $menu["menu925"] = array (
     ,array('925120', '계획정비', ''.G5_BBS_URL.'/board.php?bo_table=plan', 'plan')
     ,array('925130', '정비이력', G5_BBS_URL.'/board.php?bo_table=maintain', 'maintain')
     //,array('925140', '부품재고', G5_BBS_URL.'/board.php?bo_table=parts', 'parts')
-    //,array('925150', '매뉴얼', G5_BBS_URL.'/board.php?bo_table=manual', 'manual')
+    ,array('925150', '매뉴얼', G5_BBS_URL.'/board.php?bo_table=manual', 'manual')
     //,array('925160', '설비사양서', G5_BBS_URL.'/board.php?bo_table=drawing', 'drawing')
     //,array('925170', 'A/S연락처', G5_BBS_URL.'/board.php?bo_table=contact', 'contact')
     //,array('925210', '기종별목표설정', ''.G5_USER_ADMIN_URL.'/shift_item_goal_list.php', 'shift_item_list')

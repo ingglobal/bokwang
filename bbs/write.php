@@ -204,7 +204,6 @@ if ($config['cf_cert_use'] && !$is_admin) {
         alert('이 게시판은 휴대폰 본인확인으로 성인인증 된 회원님만 글읽기가 가능합니다.\\n\\n현재 성인인데 글읽기가 안된다면 회원정보 수정에서 휴대폰 본인확인을 다시 해주시기 바랍니다.', G5_URL);
     }
 }
-
 // 글자수 제한 설정값
 if ($is_admin || $board['bo_use_dhtml_editor'])
 {

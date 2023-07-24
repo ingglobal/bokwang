@@ -7,6 +7,7 @@ include_once($board_skin_path.'/write.php');
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style2.css">', 0);
 //print_r2($g5);
+
 ?>
 
 <section id="bo_w">

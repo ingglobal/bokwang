@@ -175,8 +175,8 @@ input[type="checkbox"]:checked:after{font-family:FontAwesome;position:absolute;c
 }
 
 /*버튼관련*/
-.btn{height: 26px;line-height: 26px;}
-a.btn{border-radius:0;font-weight:normal;height: 26px;line-height: 26px;}
+.btn{height: 30px;line-height: 30px;}
+a.btn{border-radius:0;font-weight:normal;height: 30px;line-height: 30px;}
 .btn_01, a.btn_01{background:#0891D1 !important;color:efefef !important;}
 a.btn_01:link, a.btn_01:link,a.btn_01:visited, a.btn_01:visited{color:#fff !important;}
 .btn_01:hover, a.btn_01:hover {background:#0891D1;}

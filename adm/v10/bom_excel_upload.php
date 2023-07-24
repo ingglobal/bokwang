@@ -243,7 +243,7 @@ for($i=0;$i<=sizeof($allData[0]);$i++) {
 
     // 메시지 보임
     if($arr[$i][0]['bom_part_no']) {
-        echo "<script> document.all.cont.innerHTML += '".$i.". ".$arr[$i][0]['bom_part_no']."(".$arr[$i][0]['bom_name'].") 가격: ".number_format($arr[$i][0]['bom_price'])." ----------->> 완료 (완제품은 안 보임)<br>'; </script>\n";
+        echo "<script> document.all.cont.innerHTML += '".$i.". ".$arr[$i][0]['bom_part_no']."(".$arr[$i][0]['bom_name'].") 가격: ".@number_format($arr[$i][0]['bom_price'])." ----------->> 완료 (완제품은 안 보임)<br>'; </script>\n";
     }
                 
 
@@ -287,5 +287,7 @@ if( is_array($g5['debug_msg']) ) {
 
 
 <script>
+    var goto_url = "<?=G5_USER_ADMIN_URL?>/bom_list.php";
 	document.all.cont.innerHTML += "<br><br>총 <?php echo number_format($i) ?>건 완료<br><br><font color=crimson><b>[끝]</b></font>";
+    location.href = goto_url;
 </script>

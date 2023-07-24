@@ -99,33 +99,6 @@ $cntRow = 6;
 $spreadsheet = $reader->load($filename);	
 $stCnt = $spreadsheet->getSheetCount();
 // echo $sheetCount;
-
-$g5['title'] = '수주엑셀 업로드';
-// include_once('./_top_menu_shift.php');
-include_once('./_head.php');
-echo $g5['container_sub_title'];
-?>
-<div class="" style="padding:10px;">
-	<span>
-		작업 시작~~ <font color=crimson><b>[끝]</b></font> 이라는 단어가 나오기 전 중간에 중지하지 마세요.
-	</span><br><br>
-	<span id="cont"></span>
-</div>
-<?php
-include_once('./_tail.php');
-
-$time1 = '0800';
-$time2 = '1930';
-
-$countgap = 10; // 몇건씩 보낼지 설정
-$sleepsec = 20000;  // 백만분의 몇초간 쉴지 설정
-$maxscreen = 50; // 몇건씩 화면에 보여줄건지?
-
-flush();
-ob_flush();
-//preg_replace('/[^a-zA-Z0-9가-힣\-\_\/]/','',$tstr);
-
-
 for ($i = 0; $i < $stCnt; $i++) {
     if($i == 0){
         $st = $spreadsheet->getSheet($i);
@@ -207,7 +180,6 @@ for ($i = 0; $i < $stCnt; $i++) {
                 // print_r2($dtArr);
                 // print_r2($bom);
                 // print_r2($stData[$j]);
-                $dcnt = 1;
                 //############ 수주데이터 작업 #######################
                 //각 제품별로 13일치 날짜별 루프를 돌린다. $dtArr[vk]을 참조
                 foreach($dtArr as $ord_date => $ord_cnt){
@@ -281,30 +253,8 @@ for ($i = 0; $i < $stCnt; $i++) {
                     }
 
                     if($ord_idx && !in_array($ord_idx,$ordArr)) array_push($ordArr, $ord_idx);
-
-                    
-                    
-                    $dcnt++;
                 } //foreach($dtArr as $ord_date => $ord_cnt)
 
-
-
-                if($ord_idx){
-                    echo "<script>document.all.cont.innerHTML += '".($j*$dcnt)."개 [".$ord_idx."]번 - ".$ord_date."--->완료<br>'; </script>";
-                }
-
-                flush();
-                ob_flush();
-                ob_end_flush();
-                usleep($sleepsec);
-
-                // 보기 쉽게 묶음 단위로 구분 (단락으로 구분해서 보임)
-                if ($i % $countgap == 0)
-                    echo "<script> document.all.cont.innerHTML += '<br>'; </script>\n";
-
-                // 화면 정리! 부하를 줄임 (화면 싹 지움)
-                if ($i % $maxscreen == 0)
-                    echo "<script> document.all.cont.innerHTML = ''; </script>\n";
             } //데이터가 존재하는 품목만 디비에 저장
         } //for($j=1;$j<=sizeof($stData);$j++)
 
@@ -320,7 +270,6 @@ for ($i = 0; $i < $stCnt; $i++) {
             
             $rd_sql = " UPDATE {$g5['order_table']} 
                             SET ord_price = '{$ori_res['total_price']}'
-                                , ord_update_dt = '".G5_TIME_YMDHIS."'
                         WHERE ord_idx = '{$o}'
             ";
             sql_query($rd_sql,1);
@@ -332,12 +281,4 @@ for ($i = 0; $i < $stCnt; $i++) {
 // print_r2($ordArr);
 // exit;
 
-// goto_url('./order_list.php?'.$qstr, false);
-
-?>
-
-<script>
-    var goto_url = "<?=G5_USER_ADMIN_URL?>/order_list.php?<?=$qstr?>";
-	document.all.cont.innerHTML += "<br><br>총 <?php echo number_format($j*$dcnt) ?>건 완료<br><br><font color=crimson><b>[끝]</b></font>";
-    location.href = goto_url;
-</script>
+goto_url('./order_list.php?'.$qstr, false);
