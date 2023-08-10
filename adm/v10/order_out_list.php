@@ -150,6 +150,69 @@ $qstr .= '&sca='.$sca.'&ser_cod_type='.$ser_cod_type; // 추가로 확장해서 
     <span class="btn_ov01"><span class="ov_txt">총 </span><span class="ov_num"> <?php echo number_format($total_count) ?>건 </span></span>
 </div>
 <form id="fsearch" name="fsearch" class="local_sch01 local_sch" method="get" autocomplete="off">
+    <?php if($member['mb_id'] == 'super') { ?>
+    <select id="cat1" class="cat" no="0" nx="1">
+        <option value="">::1차분류선택::</option>
+    </select>
+    <select id="cat2" class="cat" no="1" nx="2">
+        <option value="">::2차분류선택::</option>
+    </select>
+    <select id="cat3" class="cat" no="2" nx="3">
+        <option value="">::3차분류선택::</option>
+    </select>
+    <select id="cat4" class="cat" no="3" nx="4">
+        <option value="">::4차분류선택::</option>
+    </select>
+    <!--##### 분류선택 스크립트 #####-->
+    <script>
+    var bct_id = '<?=$bct_id?>';
+    var cat_ajax_url = "<?=G5_USER_ADMIN_AJAX_URL?>/category_sch_ajax.php";
+    var no = 0;
+    var nx = 0;
+    onEventCat();
+    if(!bct_id){
+        nx = 1;
+        cat_call();
+    }
+    function onEventCat(){
+        $('.cat').on('change',function(){
+            nx = Number($(this).attr('nx')) + 1;
+            if(nx < 4)
+                cat_call(bct_id);
+        });
+    }
+    function offEventCat(){
+        $('.cat').off('change');
+    }
+    function cat_call(bct_idx){
+        offEventCat();
+        $.ajax({
+            type: "POST",
+            url: cat_ajax_url,
+            dataType: 'html',
+            data: {"bct_id": bct_idx},
+            success: function(res){
+                if(res){
+                    $('.cat').each(function(){
+                        var n= Number($(this).attr('nx'));
+                        if(n == nx){
+                            $(this).empty().html(res);
+                        }
+                        else if(n > nx){
+                            $(this).empty().html('<option value="">::'+n+'차분류선택::</option>');
+                        }
+                    });
+                    onEventCat();
+                }
+            },
+            error: function(xmlReq){
+                alert('Status: ' + xmlReq.status + ' \n\rstatusText: ' + xmlReq.statusText + ' \n\rresponseText: ' + xmlReq.responseText);
+                onEventCat();
+            }
+        });
+    }
+    </script>
+    <?php } ?>
 	<label for="sfl" class="sound_only">검색대상</label>
 	<select name="sfl" id="sfl">
 		<option value="oro.ord_idx"<?php echo get_selected($_GET['sfl'], "oro.ord_idx"); ?>>수주번호</option>
