@@ -63,14 +63,6 @@ if(!$user_log_tbl){
 	include_once(G5_USER_ADMIN_SQLS_PATH.'/create_user_log.php');
 }
 
-###################################################################################
-
-user.08.hook.php
-
-function u_member_login_check()함수 안 제일 하단에 아래 소스 추가
-
-//kosmo에 사용현황 log 전송 함수(extend/suer.02.function.php에 정의)
-send_kosmo_log();
 
 ###################################################################################
 _top_menu_setting.php

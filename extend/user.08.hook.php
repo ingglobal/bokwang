@@ -62,8 +62,6 @@ function u_member_login_check(){
     ";
     sql_query($sql_bom, FALSE);
 
-    //kosmo에 사용현황 log 전송 함수(extend/suer.02.function.php에 정의)
-	send_kosmo_log();
 }
 
 // Modify for converting PC mode automatically when mobile logout. It should be stayed in Mobile mode.
