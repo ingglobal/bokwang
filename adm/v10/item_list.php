@@ -18,7 +18,8 @@ $sql_common = " FROM {$g5['item_table']} AS itm
 
 $where = array();
 // 디폴트 검색조건 (used 제외)
-$where[] = " itm.itm_status = 'finish' AND itm.com_idx = '".$_SESSION['ss_com_idx']."' ";
+// $where[] = " itm.itm_status = 'finish' AND itm.com_idx = '".$_SESSION['ss_com_idx']."' ";
+$where[] = " itm.itm_status NOT IN ('delete','trash') AND itm.com_idx = '".$_SESSION['ss_com_idx']."' ";
 
 // 검색어 설정
 if ($stx != "") {
